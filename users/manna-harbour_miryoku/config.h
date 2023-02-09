@@ -14,6 +14,9 @@
 // Prevent normal rollover on alphas from accidentally triggering mods.
 #define IGNORE_MOD_TAP_INTERRUPT
 
+// Mostly for shift to be able to trigger faster than the tapping term.
+#define PERMISSIVE_HOLD
+
 // Enable rapid switch from tap to hold, disables double tap hold auto-repeat.
 #define TAPPING_FORCE_HOLD
 
@@ -40,4 +43,3 @@
   #define COMBO_TERM 200
   #define EXTRA_SHORT_COMBOS
 #endif
-
