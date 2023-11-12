@@ -3,13 +3,17 @@
 #include QMK_KEYBOARD_H
 
 // For 0 (base) layer
-#define LOW_TAB  LT(1, KC_TAB)
-// #define RSE_SPC  LT(2, KC_SPC)
-#define RSE_ENT  LT(2, KC_ENT)
-#define GUI_SPC  RGUI_T(KC_SPC)
-#define GUI_BSP  LGUI_T(KC_BSPC)
+#define LOW_BSP  LT(1, KC_BSPC)
+// #define LOW_TAB  LT(1, KC_TAB)
+#define RSE_SPC  LT(2, KC_SPC)
+// #define RSE_ENT  LT(2, KC_ENT)
+// #define GUI_SPC  RGUI_T(KC_SPC)
+#define GUI_ENT  RGUI_T(KC_ENT)
+#define GUI_TAB  LGUI_T(KC_TAB)
+// #define GUI_BSP  LGUI_T(KC_BSPC)
 #define ALT_ESC  RALT_T(KC_ESC)
 #define ALT_DEL  LALT_T(KC_DEL)
+#define ADJ      MO(3)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_split_3x6_3(
@@ -20,7 +24,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_LSFT,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,                         KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH, KC_RSFT,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          ALT_DEL, GUI_BSP, LOW_TAB,    RSE_ENT, GUI_SPC, ALT_ESC
+                                          ALT_DEL, LOW_BSP, GUI_TAB,    GUI_ENT, RSE_SPC, ALT_ESC
                                       //`--------------------------'  `--------------------------'
   ),
   // Lower
@@ -32,7 +36,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______, XXXXXXX, KC_TILD,  KC_GRV, KC_LBRC, KC_LCBR,                      KC_RCBR, KC_RBRC, KC_COMM,  KC_DOT, KC_SLSH, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          _______, _______, _______,      MO(3), _______,KC_COLON
+                                          _______, _______, _______,    _______,     ADJ,KC_COLON
                                       //`--------------------------'  `--------------------------'
     ),
 
@@ -45,7 +49,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______,   KC_LT,   KC_GT, KC_COPY, KC_PSTE, KC_SCLN,                      KC_MPLY, KC_MPRV, KC_MNXT, KC_VOLD, KC_VOLU, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          _______, _______,   MO(3),    _______, _______, _______
+                                          _______,     ADJ, _______,    _______, _______, _______
                                       //`--------------------------'  `--------------------------'
   ),
   // Adjust
@@ -57,7 +61,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______, KC_CAPS, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, QK_BOOT, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          XXXXXXX, XXXXXXX, _______,    _______, XXXXXXX, XXXXXXX
+                                          XXXXXXX, _______, XXXXXXX,    XXXXXXX, _______, XXXXXXX
                                       //`--------------------------'  `--------------------------'
   )
 };
