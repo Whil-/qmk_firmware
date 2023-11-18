@@ -8,6 +8,9 @@
 
 #define TAPPING_TERM 200
 
+// Enable rapid switch from tap to hold, disables double tap hold auto-repeat.
+#define QUICK_TAP_TERM 0
+
 // When enabled, typing a mod-tap plus second within term will register as the mod-combo
 // Ref: https://beta.docs.qmk.fm/using-qmk/software-features/tap_hold#permissive-hold
 #define PERMISSIVE_HOLD
