@@ -31,5 +31,3 @@ This is the C configuration file for the keymap
 // When enabled, typing a mod-tap plus second within term will register as the mod-combo
 // Ref: https://beta.docs.qmk.fm/using-qmk/software-features/tap_hold#permissive-hold
 #define PERMISSIVE_HOLD
-
-#define OLED_KEYLOGGER_LENGTH 5
