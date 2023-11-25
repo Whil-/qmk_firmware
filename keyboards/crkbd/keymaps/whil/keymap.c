@@ -3,28 +3,29 @@
 #include QMK_KEYBOARD_H
 
 // For 0 (base) layer
-#define LOW_BSP  LT(1, KC_BSPC)
-// #define LOW_TAB  LT(1, KC_TAB)
-#define RSE_SPC  LT(2, KC_SPC)
-// #define RSE_ENT  LT(2, KC_ENT)
-// #define GUI_SPC  RGUI_T(KC_SPC)
-#define GUI_ENT  RGUI_T(KC_ENT)
 #define GUI_TAB  LGUI_T(KC_TAB)
-// #define GUI_BSP  LGUI_T(KC_BSPC)
-#define ALT_ESC  RALT_T(KC_ESC)
-#define ALT_DEL  LALT_T(KC_DEL)
-#define ADJ      MO(3)
+#define GUI_BSPC RGUI_T(KC_BSPC)
+#define CTL_ESC  LCTL_T(KC_ESC)
+#define CTL_QUOT RCTL_T(KC_QUOT)
+#define ALT_ENT  RALT_T(KC_ENT)
+
+#define GUI_TILD LGUI_T(KC_TILD)
+#define CTL_GRV  RCTL_T(KC_GRV)
+
+#define LOWER       MO(1)
+#define RSE_SPC  LT(2, KC_SPC)
+#define ADJUST      MO(3)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      KC_LALT,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                         KC_J,    KC_L,    KC_U,    KC_Y, KC_QUOT, KC_RALT,
+      GUI_TAB,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                         KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN,GUI_BSPC,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LCTL,    KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                         KC_M,    KC_N,    KC_E,    KC_I,    KC_O, KC_RCTL,
+      CTL_ESC,    KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                         KC_M,    KC_N,    KC_E,    KC_I,    KC_O,CTL_QUOT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LSFT,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,                         KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH, KC_RSFT,
+      KC_LALT,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,                         KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH, ALT_ENT,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          ALT_DEL, LOW_BSP, GUI_TAB,    GUI_ENT, RSE_SPC, ALT_ESC
+                                          XXXXXXX,   LOWER, KC_LSFT,    KC_RSFT, RSE_SPC,  ADJUST
                                       //`--------------------------'  `--------------------------'
   ),
   // Lower
@@ -36,20 +37,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______, XXXXXXX, KC_TILD,  KC_GRV, KC_LBRC, KC_LCBR,                      KC_RCBR, KC_RBRC, KC_COMM,  KC_DOT, KC_SLSH, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          _______, _______, _______,    _______,     ADJ,KC_COLON
+                                          _______, _______, _______,    _______,  ADJUST, _______
                                       //`--------------------------'  `--------------------------'
     ),
 
   // Raise
   [2] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      _______,  KC_DEL, KC_BSPC, KC_UNDS, KC_PLUS, KC_PGUP,                      XXXXXXX, XXXXXXX, XXXXXXX, KC_BSLS, KC_PIPE, _______,
+      _______,  KC_DEL, KC_BSPC, KC_UNDS, KC_PLUS, KC_PIPE,                      KC_TILD, XXXXXXX, XXXXXXX, XXXXXXX,  KC_APP, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, KC_HOME, KC_END , KC_MINS, KC_EQL , KC_PGDN,                       KC_APP, KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, _______,
+      _______, KC_HOME, KC_END , KC_MINS, KC_EQL , KC_BSLS,                       KC_GRV, KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______,   KC_LT,   KC_GT, KC_COPY, KC_PSTE, KC_SCLN,                      KC_MPLY, KC_MPRV, KC_MNXT, KC_VOLD, KC_VOLU, _______,
+      _______, KC_PGUP, KC_PGDN, KC_COPY, KC_PSTE, XXXXXXX,                      KC_MPLY, KC_MPRV, KC_MNXT, KC_VOLD, KC_VOLU, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          _______,     ADJ, _______,    _______, _______, _______
+                                          _______,  ADJUST, _______,    _______, _______, _______
                                       //`--------------------------'  `--------------------------'
   ),
   // Adjust
