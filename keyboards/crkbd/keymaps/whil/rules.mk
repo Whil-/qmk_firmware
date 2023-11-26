@@ -12,10 +12,10 @@ MOUSEKEY_ENABLE = yes
 RGBLIGHT_ENABLE = no
 
 # https://github.com/samhocevar-forks/qmk-firmware/blob/master/docs/feature_rgb_matrix.md
-# RGB_MATRIX_ENABLE = WS2812
+RGB_MATRIX_ENABLE = WS2812
 
-OLED_DRIVER_ENABLED = yes
-OLED_ENABLED = yes
+OLED_ENABLE = yes
+# WPM_ENABLE = yes
 
 # If using ELITE-C instead of PROMICRO
 # https://github.com/qmk/qmk_firmware/issues/21136#issuecomment-1577727115
