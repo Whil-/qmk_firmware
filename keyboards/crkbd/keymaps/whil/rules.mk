@@ -10,6 +10,7 @@ MOUSEKEY_ENABLE = yes
 RGBLIGHT_ENABLE = no # This is for RGB *underglow*
 RGB_MATRIX_ENABLE = yes # Enable WS2812 RGB underlight
 
+NKRO_ENABLE = yes
 OLED_ENABLE = yes
 WPM_ENABLE = yes
 
