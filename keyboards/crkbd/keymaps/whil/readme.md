@@ -1,7 +1,7 @@
 
 # Whil-'s Markstos layout for Colemak DH
 
-A 3x6 layout for split ergonomic keywords forked from and inspired by Maskstos layout.
+A 3x6 layout for split ergonomic keywords initially forked from Maskstos layout. But now heavily modified.
 
 For a detailed description of Markstos see [markstos Corne layout](https://mark.stosberg.com/markstos-corne-3x5-1-keyboard-layout). This layout is based on that layout but significantly modified.
 
@@ -35,3 +35,7 @@ This is my personal layout and is subject to evolve further with my tastes. Fork
 
 * This layout: [Gustav Wikstrom](mailto:gustav@whil.se)
 * Markstos: [Mark Stosberg](mailto:mark@stosberg.com)
+
+Other things that has been used:
+- OLED Luna dog from: [soundmonster](../soundmonster/)
+- OLED Shift states from: [colemak_luna](../colemak_luna)
