@@ -2,23 +2,33 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 #include QMK_KEYBOARD_H
 
-// For 0 (base) layer
+// Define keys to keep them short in the config below
 #define CTL_ESC  LCTL_T(KC_ESC)
-#define GUI_QUOT RGUI_T(KC_QUOT)
-
-#define GUI_ENT  LGUI_T(KC_ENT)
 #define CTL_SPC  RCTL_T(KC_SPC)
+#define CTL_TAB  LCTL_T(KC_TAB)
+
+#define ALT_QUOT LALT_T(KC_QUOT)
+#define ALT_ENT  LALT_T(KC_ENT)
+
+#define GUI_QUOT RGUI_T(KC_QUOT)
+#define GUI_ENT  LGUI_T(KC_ENT)
 
 #define BSE_MAC  DF(0)
 #define BSE_WIN  DF(1)
+
 #define LOW_TAB  LT(2, KC_TAB)
+#define LOW_BSPC LT(2, KC_BSPC)
+
 #define RSE_BSPC LT(3, KC_BSPC)
+#define RSE_SPC  LT(3, KC_SPC)
+
 #define ADJUST   MO(4)
+
+#define OSM_RALT OSM(MOD_RALT)
+#define OSM_SFT  OSM(MOD_RSFT)
 
 // Win
 #define GUI_GRV  RGUI_T(KC_GRV)
-#define ALT_QUOT LALT_T(KC_QUOT)
-#define ALT_ENT  LALT_T(KC_ENT)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // Mac
@@ -30,7 +40,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_MINS,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,                         KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH,  KC_EQL,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_RALT, GUI_ENT, LOW_TAB,   RSE_BSPC, CTL_SPC, KC_RSFT
+                                          CTL_TAB,LOW_BSPC, GUI_ENT,    OSM_SFT, RSE_SPC,OSM_RALT
                                       //`--------------------------'  `--------------------------'
   ),
 
@@ -43,7 +53,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_MINS,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,                         KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH,  KC_EQL,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_RALT, ALT_ENT, LOW_TAB,   RSE_BSPC, CTL_SPC, KC_RSFT
+                                          CTL_TAB,LOW_BSPC, ALT_ENT,    OSM_SFT, RSE_SPC,OSM_RALT
                                       //`--------------------------'  `--------------------------'
   ),
 
@@ -56,7 +66,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______, XXXXXXX, XXXXXXX, XXXXXXX, KC_LBRC, KC_LCBR,                      KC_RCBR, KC_RBRC, KC_COMM,  KC_DOT, KC_SLSH, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          _______, _______, _______,     ADJUST, _______, _______
+                                          _______, _______, _______,    _______,  ADJUST, _______
                                       //`--------------------------'  `--------------------------'
     ),
 
@@ -69,7 +79,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_MPLY, KC_MPRV, KC_MNXT, KC_VOLD, KC_VOLU, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          _______, _______,  ADJUST,    _______, _______, _______
+                                          _______,  ADJUST, _______,    _______, _______, _______
                                       //`--------------------------'  `--------------------------'
   ),
   // Adjust
@@ -81,7 +91,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______,  KC_APP, XXXXXXX, XXXXXXX, BSE_MAC, BSE_WIN,                      XXXXXXX, XXXXXXX, KC_WH_D, KC_WH_U, QK_BOOT, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          XXXXXXX, XXXXXXX, _______,    _______, XXXXXXX, XXXXXXX
+                                          XXXXXXX, _______, XXXXXXX,    XXXXXXX, _______, XXXXXXX
                                       //`--------------------------'  `--------------------------'
   )
 };
