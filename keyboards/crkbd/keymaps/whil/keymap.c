@@ -9,18 +9,6 @@ extern keymap_config_t keymap_config;
 extern rgblight_config_t rgblight_config;
 #endif
 
-// Each layer gets a name for readability, which is then used in the keymap matrix below.
-// The underscores don't mean anything - you can have a layer called STUFF or any other name.
-// Layer names don't all need to be of the same length, obviously, and you can also skip them
-// entirely and just use numbers.
-enum layers {
-  _MAC,
-  _WIN,
-  _LOWER,
-  _RAISE,
-  _ADJUST
-};
-
 // Define keys to keep them short in the config below
 // For 0 (base) layer
 #define CTL_ESC  LCTL_T(KC_ESC)
@@ -40,14 +28,16 @@ enum layers {
 
 #define BSE_MAC  DF(0)
 #define BSE_WIN  DF(1)
+#define BSE_SMAC DF(2)
+// #define BSE_SWIN DF(3)
 
-#define LOW_TAB  LT(2, KC_TAB)
-#define LOW_BSPC LT(2, KC_BSPC)
+#define LOW_TAB  LT(3, KC_TAB)
+#define LOW_BSPC LT(3, KC_BSPC)
 
-#define RSE_BSPC LT(3, KC_BSPC)
-#define RSE_SPC  LT(3, KC_SPC)
+#define RSE_BSPC LT(4, KC_BSPC)
+#define RSE_SPC  LT(4, KC_SPC)
 
-#define ADJUST   MO(4)
+#define ADJUST   MO(5)
 
 #define OSM_RALT OSM(MOD_RALT)
 #define OSM_SFT  OSM(MOD_RSFT)
@@ -55,8 +45,50 @@ enum layers {
 // Win
 #define GUI_GRV  RGUI_T(KC_GRV)
 
+enum custom_keycodes {
+  MAC_AA = SAFE_RANGE
+ ,MAC_AE
+ ,MAC_OE
+// ,WIN_AA
+// ,WIN_AE
+// ,WIN_OE
+};
+
+char *mac_swedish_codes[][2] = {
+    {
+        SS_RALT("a"), // Option+a → å
+        SS_RALT("A"), // Option+A → Å
+    },
+    {
+        SS_RALT("u")"a", // Option+u, a → ä
+        SS_RALT("u")"A", // Option+u, A → Ä
+    },
+    {
+        SS_RALT("u")"o", // Option+u, o → ö
+        SS_RALT("u")"O", // Option+u, O → Ö
+    },
+};
+
+// char *win_swedish_codes[][2] = {
+//     {
+//         SS_LALT(SS_TAP(X_KP_1)SS_TAP(X_KP_3)SS_TAP(X_KP_4)), // Alt+134 → å
+//         SS_LALT(SS_TAP(X_KP_1)SS_TAP(X_KP_4)SS_TAP(X_KP_3)), // Alt+143 → Å
+//
+//     },
+//     {
+//         SS_LALT(SS_TAP(X_KP_1)SS_TAP(X_KP_3)SS_TAP(X_KP_2)), // Alt+132 → ä
+//         SS_LALT(SS_TAP(X_KP_1)SS_TAP(X_KP_4)SS_TAP(X_KP_2)), // Alt+142 → Ä
+//     },
+//     {
+//         SS_LALT(SS_TAP(X_KP_1)SS_TAP(X_KP_4)SS_TAP(X_KP_8)), // Alt+148 → ö
+//         SS_LALT(SS_TAP(X_KP_1)SS_TAP(X_KP_5)SS_TAP(X_KP_3)), // Alt+153 → Ö
+//     },
+// };
+
+
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-  // Mac
+  // Base Mac
   [0] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       KC_BSLS,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                         KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN,  KC_GRV,
@@ -69,7 +101,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                       //`--------------------------'  `--------------------------'
   ),
 
-  // Win (GUI -> ALT, Extra GUI-key)
+  // Base Win
   [1] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       KC_BSLS,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                         KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN, GUI_GRV,
@@ -81,40 +113,52 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                           ALT_TAB,LOW_BSPC, OSM_SFT,    OSM_SFT, RSE_SPC, CTL_ENT
                                       //`--------------------------'  `--------------------------'
   ),
+  // Base Mac Swe
+  [2] = LAYOUT_split_3x6_3(
+  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
+      KC_BSLS,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                         KC_J,    KC_L,    KC_U,    KC_Y, MAC_OE,   MAC_AA,
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      CTL_ESC,    KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                         KC_M,    KC_N,    KC_E,    KC_I,    KC_O,  MAC_AE,
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+     ALT_MINS,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,                         KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH, ALT_EQL,
+  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
+                                          GUI_TAB,LOW_BSPC, OSM_SFT,    OSM_SFT, RSE_SPC, CTL_ENT
+                                      //`--------------------------'  `--------------------------'
+  ),
 
   // Lower
-  [2] = LAYOUT_split_3x6_3(
+  [3] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       KC_LPRN, KC_EXLM,   KC_AT, KC_HASH, KC_DLR,  KC_PERC,                      KC_CIRC, KC_AMPR, KC_ASTR, XXXXXXX, KC_SCLN, KC_RPRN,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                         KC_6,    KC_7,    KC_8,    KC_9,    KC_0, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, XXXXXXX, XXXXXXX, XXXXXXX, KC_LBRC, KC_LCBR,                      KC_RCBR, KC_RBRC, KC_COMM,  KC_DOT, KC_SLSH, _______,
+      _______, KC_SCLN,  KC_GRV, KC_QUOT, KC_LBRC, KC_LCBR,                      KC_RCBR, KC_RBRC, KC_COMM,  KC_DOT, KC_SLSH, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           _______, _______, _______,    _______, _______, _______
                                       //`--------------------------'  `--------------------------'
   ),
 
   // Raise
-  [3] = LAYOUT_split_3x6_3(
+  [4] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       _______,  KC_DEL, KC_BSPC, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, KC_HOME, KC_PGDN, KC_PGUP,  KC_END, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, _______,
+      _______, XXXXXXX, XXXXXXX, XXXXXXX, BSE_MAC,BSE_SMAC,                      XXXXXXX, KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_MPLY, KC_MPRV, KC_MNXT, KC_VOLD, KC_VOLU, _______,
+      _______, XXXXXXX, XXXXXXX, XXXXXXX, BSE_WIN, XXXXXXX,                      KC_MPLY, KC_MPRV, KC_MNXT, KC_VOLD, KC_VOLU, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           _______, _______, _______,    _______, _______, _______
   ),
 
   // Adjust
-  [4] = LAYOUT_split_3x6_3(
+  [5] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       _______,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                        KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_CAPS,  KC_F11,  KC_F12, KC_BTN2, KC_BTN1, KC_BTN3,                       KC_APP, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      RGB_TOG, RGB_MOD, RGB_HUI, RGB_SAI, RGB_VAI, RGB_SPI,                      BSE_MAC, BSE_WIN, KC_WH_D, KC_WH_U, QK_BOOT, KC_RSFT,
+      RGB_TOG, RGB_MOD, RGB_HUI, RGB_SAI, RGB_VAI, RGB_SPI,                      XXXXXXX, XXXXXXX, KC_WH_D, KC_WH_U, QK_BOOT, KC_RSFT,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           XXXXXXX, _______, XXXXXXX,    KC_RSFT, _______, XXXXXXX
                                       //`--------------------------'  `--------------------------'
@@ -284,12 +328,19 @@ static void print_logo_narrow(void) {
   oled_set_cursor(0, 8);
   switch (get_highest_layer(default_layer_state)) {
   case 0:
-    oled_write(" mac", false);
+    oled_write(" mac ", false);
+    oled_write("     ", false);
     break;
   case 1:
     oled_write(" win ", false);
+    oled_write("     ", false);
+    break;
+  case 2:
+    oled_write(" mac ", false);
+    oled_write(" swe ", false);
     break;
   default:
+    oled_write("     ", false);
     oled_write("     ", false);
   }
 
@@ -329,11 +380,11 @@ static void render_layer_state(void) {
         0x20, 0x9d, 0x9e, 0x9f, 0x20,
         0x20, 0xbd, 0xbe, 0xbf, 0x20,
         0x20, 0xdd, 0xde, 0xdf, 0x20, 0};
-    if(layer_state_is(4)) {
+    if(layer_state_is(5)) {
         oled_write_P(adjust_layer, false);
-    } else if(layer_state_is(3)) {
+    } else if(layer_state_is(4)) {
         oled_write_P(raise_layer, false);
-    } else if(layer_state_is(2)) {
+    } else if(layer_state_is(3)) {
         oled_write_P(lower_layer, false);
     } else {
         oled_write_P(default_layer, false);
@@ -506,7 +557,7 @@ bool oled_task_user(void) {
 #endif
 
 layer_state_t layer_state_set_user(layer_state_t state) {
-  state = update_tri_layer_state(state, 2, 3, 4);
+  state = update_tri_layer_state(state, 3, 4, 5);
 
   switch (get_highest_layer(state)) {
   case 0:
@@ -516,14 +567,17 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     rgb_matrix_reload_from_eeprom();
     break;
   case 2:
-    rgb_matrix_mode_noeeprom(RGB_MATRIX_ALPHAS_MODS);
-    rgb_matrix_sethsv_noeeprom(HSV_TEAL);
+    rgb_matrix_reload_from_eeprom();
     break;
   case 3:
     rgb_matrix_mode_noeeprom(RGB_MATRIX_ALPHAS_MODS);
-    rgb_matrix_sethsv_noeeprom(HSV_PURPLE);
+    rgb_matrix_sethsv_noeeprom(HSV_TEAL);
     break;
   case 4:
+    rgb_matrix_mode_noeeprom(RGB_MATRIX_ALPHAS_MODS);
+    rgb_matrix_sethsv_noeeprom(HSV_PURPLE);
+    break;
+  case 5:
     rgb_matrix_mode_noeeprom(RGB_MATRIX_ALPHAS_MODS);
     rgb_matrix_sethsv_noeeprom(HSV_YELLOW);
     break;
@@ -532,30 +586,67 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        /* KEYBOARD PET STATUS START */
+  static uint16_t my_timer;
 
-        case CTL_ESC:
-        case CTL_TAB:
-        case GUI_ENT:
-        case GUI_QUOT:
-            isSneaking = record->event.pressed;
-            break;
-        case KC_SPC:
-        case RSE_SPC:
-          if (record->tap.count) {
-            isJumping = record->event.pressed;
-          }
-          if (isJumping) {
-            showedJump = false;
-          }
-          break;
-    case KC_CAPS:
-            isBarking = record->event.pressed;
-            break;
+  switch (keycode) {
+    /* KEYBOARD PET STATUS START */
+  case CTL_ESC:
+  case CTL_TAB:
+  case GUI_ENT:
+  case GUI_QUOT:
+    isSneaking = record->event.pressed;
+    break;
+  case KC_SPC:
+  case RSE_SPC:
+    if (record->tap.count) {
+      isJumping = record->event.pressed;
+    }
+    if (isJumping) {
+      showedJump = false;
+    }
+    break;
+  case KC_CAPS:
+    isBarking = record->event.pressed;
+    break;
+    /* KEYBOARD PET STATUS END */
 
-        /* KEYBOARD PET STATUS END */
-}
+    /* Custom SWEDISH Keycodes START */
+  case MAC_AA:
+  case MAC_AE:
+  case MAC_OE:
+    if (record->event.pressed) {
+     my_timer = timer_read();
+      register_code(KC_RGUI);
+    } else {
+      unregister_code(KC_RGUI);
+      if (timer_elapsed(my_timer) < TAPPING_TERM) {
+        uint8_t mods = get_mods();
+        clear_mods();
 
-return true;
+        // Send code based on which key was pressed and whether Shift was held.
+        uint16_t index = keycode - MAC_AA;
+        uint8_t shift = mods & (MOD_BIT(KC_LSFT) | MOD_BIT(KC_RSFT));
+        send_string(mac_swedish_codes[index][(bool)shift]);
+
+        set_mods(mods);
+      }
+    }
+    break;
+  }
+  // case WIN_AA:
+  // case WIN_AE:
+  // case WIN_OE:
+  //   uint8_t mods = get_mods();
+  //   clear_mods();
+  //
+  //   // Send code based on which key was pressed and whether Shift was held.
+  //   uint16_t index = keycode - WIN_AA;
+  //   uint8_t shift = mods & (MOD_BIT(KC_LSFT) | MOD_BIT(KC_RSFT));
+  //   send_string(win_swedish_codes[index][(bool)shift]);
+  //
+  //   set_mods(mods);
+  //   break;
+  //   /* Custom SWEDISH Keycodes END*/
+  // }
+  return true;
 }
