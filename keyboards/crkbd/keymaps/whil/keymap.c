@@ -20,7 +20,7 @@ extern rgblight_config_t rgblight_config;
 #define ALT_ENT  LALT_T(KC_ENT)
 #define ALT_MINS LALT_T(KC_MINS)
 #define ALT_EQL  RALT_T(KC_EQL)
-#define ALT_TAB  RALT_T(KC_TAB)
+#define ALT_TAB  LALT_T(KC_TAB)
 
 #define GUI_QUOT RGUI_T(KC_QUOT)
 #define GUI_ENT  LGUI_T(KC_ENT)
@@ -615,21 +615,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   case MAC_AE:
   case MAC_OE:
     if (record->event.pressed) {
-     my_timer = timer_read();
-      register_code(KC_RGUI);
-    } else {
-      unregister_code(KC_RGUI);
-      if (timer_elapsed(my_timer) < TAPPING_TERM) {
-        uint8_t mods = get_mods();
-        clear_mods();
+      uint8_t mods = get_mods();
+      clear_mods();
 
-        // Send code based on which key was pressed and whether Shift was held.
-        uint16_t index = keycode - MAC_AA;
-        uint8_t shift = mods & (MOD_BIT(KC_LSFT) | MOD_BIT(KC_RSFT));
-        send_string(mac_swedish_codes[index][(bool)shift]);
+      // Send code based on which key was pressed and whether Shift was held.
+      uint16_t index = keycode - MAC_AA;
+      uint8_t shift = mods & (MOD_BIT(KC_LSFT) | MOD_BIT(KC_RSFT));
+      send_string(mac_swedish_codes[index][(bool)shift]);
 
-        set_mods(mods);
-      }
+      set_mods(mods);
     }
     break;
   }
