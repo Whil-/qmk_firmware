@@ -54,7 +54,7 @@ enum custom_keycodes {
 // ,WIN_OE
 };
 
-char *mac_swedish_codes[][2] = {
+char *swedish_codes[][2] = {
     {
         SS_RALT("a"), // Option+a → å
         SS_RALT("A"), // Option+A → Å
@@ -67,9 +67,6 @@ char *mac_swedish_codes[][2] = {
         SS_RALT("u")"o", // Option+u, o → ö
         SS_RALT("u")"O", // Option+u, O → Ö
     },
-};
-
-// char *win_swedish_codes[][2] = {
 //     {
 //         SS_LALT(SS_TAP(X_KP_1)SS_TAP(X_KP_3)SS_TAP(X_KP_4)), // Alt+134 → å
 //         SS_LALT(SS_TAP(X_KP_1)SS_TAP(X_KP_4)SS_TAP(X_KP_3)), // Alt+143 → Å
@@ -83,9 +80,7 @@ char *mac_swedish_codes[][2] = {
 //         SS_LALT(SS_TAP(X_KP_1)SS_TAP(X_KP_4)SS_TAP(X_KP_8)), // Alt+148 → ö
 //         SS_LALT(SS_TAP(X_KP_1)SS_TAP(X_KP_5)SS_TAP(X_KP_3)), // Alt+153 → Ö
 //     },
-// };
-
-
+};
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // Base Mac
@@ -586,8 +581,6 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  static uint16_t my_timer;
-
   switch (keycode) {
     /* KEYBOARD PET STATUS START */
   case CTL_ESC:
@@ -621,7 +614,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       // Send code based on which key was pressed and whether Shift was held.
       uint16_t index = keycode - MAC_AA;
       uint8_t shift = mods & (MOD_BIT(KC_LSFT) | MOD_BIT(KC_RSFT));
-      send_string(mac_swedish_codes[index][(bool)shift]);
+      send_string(swedish_codes[index][(bool)shift]);
 
       set_mods(mods);
     }
