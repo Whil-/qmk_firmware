@@ -54,33 +54,7 @@ enum custom_keycodes {
 // ,WIN_OE
 };
 
-char *swedish_codes[][2] = {
-    {
-        SS_RALT("a"), // Option+a → å
-        SS_RALT("A"), // Option+A → Å
-    },
-    {
-        SS_RALT("u")"a", // Option+u, a → ä
-        SS_RALT("u")"A", // Option+u, A → Ä
-    },
-    {
-        SS_RALT("u")"o", // Option+u, o → ö
-        SS_RALT("u")"O", // Option+u, O → Ö
-    },
-//     {
-//         SS_LALT(SS_TAP(X_KP_1)SS_TAP(X_KP_3)SS_TAP(X_KP_4)), // Alt+134 → å
-//         SS_LALT(SS_TAP(X_KP_1)SS_TAP(X_KP_4)SS_TAP(X_KP_3)), // Alt+143 → Å
-//
-//     },
-//     {
-//         SS_LALT(SS_TAP(X_KP_1)SS_TAP(X_KP_3)SS_TAP(X_KP_2)), // Alt+132 → ä
-//         SS_LALT(SS_TAP(X_KP_1)SS_TAP(X_KP_4)SS_TAP(X_KP_2)), // Alt+142 → Ä
-//     },
-//     {
-//         SS_LALT(SS_TAP(X_KP_1)SS_TAP(X_KP_4)SS_TAP(X_KP_8)), // Alt+148 → ö
-//         SS_LALT(SS_TAP(X_KP_1)SS_TAP(X_KP_5)SS_TAP(X_KP_3)), // Alt+153 → Ö
-//     },
-};
+#define GUI_MAE RGUI_T(MAC_AE)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // Base Mac
@@ -113,7 +87,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       KC_BSLS,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                         KC_J,    KC_L,    KC_U,    KC_Y, MAC_OE,   MAC_AA,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      CTL_ESC,    KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                         KC_M,    KC_N,    KC_E,    KC_I,    KC_O,  MAC_AE,
+      CTL_ESC,    KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                         KC_M,    KC_N,    KC_E,    KC_I,    KC_O, GUI_MAE,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
      ALT_MINS,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,                         KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH, ALT_EQL,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
@@ -580,6 +554,34 @@ layer_state_t layer_state_set_user(layer_state_t state) {
   return state;
 }
 
+char *swedish_codes[][2] = {
+    {
+        SS_RALT("a"), // Option+a → å
+        SS_RALT("A"), // Option+A → Å
+    },
+    {
+        SS_RALT("u")"a", // Option+u, a → ä
+        SS_RALT("u")"A", // Option+u, A → Ä
+    },
+    {
+        SS_RALT("u")"o", // Option+u, o → ö
+        SS_RALT("u")"O", // Option+u, O → Ö
+    },
+//     {
+//         SS_LALT(SS_TAP(X_KP_1)SS_TAP(X_KP_3)SS_TAP(X_KP_4)), // Alt+134 → å
+//         SS_LALT(SS_TAP(X_KP_1)SS_TAP(X_KP_4)SS_TAP(X_KP_3)), // Alt+143 → Å
+//
+//     },
+//     {
+//         SS_LALT(SS_TAP(X_KP_1)SS_TAP(X_KP_3)SS_TAP(X_KP_2)), // Alt+132 → ä
+//         SS_LALT(SS_TAP(X_KP_1)SS_TAP(X_KP_4)SS_TAP(X_KP_2)), // Alt+142 → Ä
+//     },
+//     {
+//         SS_LALT(SS_TAP(X_KP_1)SS_TAP(X_KP_4)SS_TAP(X_KP_8)), // Alt+148 → ö
+//         SS_LALT(SS_TAP(X_KP_1)SS_TAP(X_KP_5)SS_TAP(X_KP_3)), // Alt+153 → Ö
+//     },
+};
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     /* KEYBOARD PET STATUS START */
@@ -617,6 +619,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       send_string(swedish_codes[index][(bool)shift]);
 
       set_mods(mods);
+    }
+    return false;
+  case GUI_MAE:
+    if (record->tap.count && record->event.pressed) {
+      uint8_t mods = get_mods();
+      clear_mods();
+
+      // Send code based on which key was pressed and whether Shift was held.
+      uint8_t shift = mods & (MOD_BIT(KC_LSFT) | MOD_BIT(KC_RSFT));
+      send_string(swedish_codes[1][(bool)shift]);
+      set_mods(mods);
+      return false;        // Return false to ignore further processing of key
     }
     break;
   }
