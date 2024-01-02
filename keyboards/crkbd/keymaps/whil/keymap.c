@@ -25,6 +25,7 @@ extern rgblight_config_t rgblight_config;
 #define GUI_QUOT RGUI_T(KC_QUOT)
 #define GUI_ENT  LGUI_T(KC_ENT)
 #define GUI_TAB  LGUI_T(KC_TAB)
+#define GUI_MAE RGUI_T(MAC_AE)
 
 #define BSE_MAC  DF(0)
 #define BSE_WIN  DF(1)
@@ -53,8 +54,6 @@ enum custom_keycodes {
 // ,WIN_AE
 // ,WIN_OE
 };
-
-#define GUI_MAE RGUI_T(MAC_AE)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // Base Mac
@@ -587,8 +586,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     /* KEYBOARD PET STATUS START */
   case CTL_ESC:
   case CTL_TAB:
+  case CTL_ENT:
   case GUI_ENT:
   case GUI_QUOT:
+  case GUI_TAB:
+  case GUI_GRV:
     isSneaking = record->event.pressed;
     break;
   case KC_SPC:
