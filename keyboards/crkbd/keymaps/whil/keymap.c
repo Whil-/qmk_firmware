@@ -25,6 +25,7 @@ extern rgblight_config_t rgblight_config;
 #define GUI_QUOT RGUI_T(KC_QUOT)
 #define GUI_ENT  LGUI_T(KC_ENT)
 #define GUI_TAB  LGUI_T(KC_TAB)
+#define GUI_ESC  LGUI_T(KC_ESC)
 #define GUI_MAE RGUI_T(MAC_AE)
 
 #define BSE_MAC  DF(0)
@@ -65,7 +66,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
      ALT_MINS,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,                         KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH, ALT_EQL,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          GUI_TAB,LOW_BSPC, OSM_SFT,    OSM_SFT, RSE_SPC, CTL_ENT
+                                          GUI_ESC,LOW_BSPC, OSM_SFT,    OSM_SFT, RSE_SPC, CTL_ENT
                                       //`--------------------------'  `--------------------------'
   ),
 
@@ -90,7 +91,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
      ALT_MINS,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,                         KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH, ALT_EQL,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          GUI_TAB,LOW_BSPC, OSM_SFT,    OSM_SFT, RSE_SPC, CTL_ENT
+                                          GUI_ESC,LOW_BSPC, OSM_SFT,    OSM_SFT, RSE_SPC, CTL_ENT
                                       //`--------------------------'  `--------------------------'
   ),
 
