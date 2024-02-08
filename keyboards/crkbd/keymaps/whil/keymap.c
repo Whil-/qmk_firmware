@@ -30,14 +30,13 @@ extern rgblight_config_t rgblight_config;
 
 #define BSE_MAC  DF(0)
 #define BSE_WIN  DF(1)
-#define BSE_SMAC DF(2)
-// #define BSE_SWIN DF(3)
 
-#define LOW_TAB  LT(3, KC_TAB)
-#define LOW_BSPC LT(3, KC_BSPC)
+#define LOW_TAB  LT(2, KC_TAB)
+#define LOW_BSPC LT(2, KC_BSPC)
 
-#define RSE_BSPC LT(4, KC_BSPC)
-#define RSE_SPC  LT(4, KC_SPC)
+#define RSE_BSPC LT(3, KC_BSPC)
+#define RSE_SPC  LT(3, KC_SPC)
+#define RSE_SPCM LT(4, KC_SPC)
 
 #define ADJUST   MO(5)
 
@@ -66,7 +65,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
      ALT_MINS,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,                         KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH, ALT_EQL,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          GUI_ESC,LOW_BSPC, OSM_SFT,    OSM_SFT, RSE_SPC, CTL_ENT
+                                          GUI_ESC,LOW_BSPC, OSM_SFT,    OSM_SFT,RSE_SPCM, CTL_ENT
                                       //`--------------------------'  `--------------------------'
   ),
 
@@ -82,21 +81,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                           ALT_TAB,LOW_BSPC, OSM_SFT,    OSM_SFT, RSE_SPC, CTL_ENT
                                       //`--------------------------'  `--------------------------'
   ),
-  // Base Mac Swe
-  [2] = LAYOUT_split_3x6_3(
-  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      KC_BSLS,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                         KC_J,    KC_L,    KC_U,    KC_Y, MAC_OE,   MAC_AA,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      CTL_TAB,    KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                         KC_M,    KC_N,    KC_E,    KC_I,    KC_O, GUI_MAE,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     ALT_MINS,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,                         KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH, ALT_EQL,
-  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          GUI_ESC,LOW_BSPC, OSM_SFT,    OSM_SFT, RSE_SPC, CTL_ENT
-                                      //`--------------------------'  `--------------------------'
-  ),
-
   // Lower
-  [3] = LAYOUT_split_3x6_3(
+  [2] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       KC_LPRN, KC_EXLM,   KC_AT, KC_HASH, KC_DLR,  KC_PERC,                      KC_CIRC, KC_AMPR, KC_ASTR, KC_RPRN, KC_SCLN,  KC_GRV,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -109,11 +95,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   // Raise
+  [3] = LAYOUT_split_3x6_3(
+  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
+      _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_HOME,                      KC_PGUP, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  KC_END,                      KC_PGDN, KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, _______,
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_MPLY, KC_MPRV, KC_MNXT, KC_VOLD, KC_VOLU, _______,
+  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
+                                          _______, _______, _______,    _______, _______, _______
+  ),
+
+  // Raise Mac
   [4] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, KC_HOME, KC_PGDN, KC_PGUP,  KC_END, _______,
+      _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_HOME,                      KC_PGUP, XXXXXXX, XXXXXXX, XXXXXXX,  MAC_OE,  MAC_AA,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, _______,
+      _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  KC_END,                      KC_PGDN, KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, GUI_MAE,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_MPLY, KC_MPRV, KC_MNXT, KC_VOLD, KC_VOLU, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
@@ -125,7 +123,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       BSE_WIN,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                        KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10, BSE_MAC,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_CAPS,  KC_F11,  KC_F12, KC_BTN2, KC_BTN1, KC_BTN3,                       KC_APP, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R,BSE_SMAC,
+      KC_CAPS,  KC_F11,  KC_F12, KC_BTN2, KC_BTN1, KC_BTN3,                       KC_APP, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       RGB_TOG, RGB_MOD, RGB_HUI, RGB_SAI, RGB_VAI, RGB_SPI,                      QK_BOOT, XXXXXXX, KC_WH_D, KC_WH_U, XXXXXXX, KC_RSFT,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
@@ -349,11 +347,13 @@ static void render_layer_state(void) {
         0x20, 0x9d, 0x9e, 0x9f, 0x20,
         0x20, 0xbd, 0xbe, 0xbf, 0x20,
         0x20, 0xdd, 0xde, 0xdf, 0x20, 0};
-    if(layer_state_is(5)) {
+    if (layer_state_is(5)) {
         oled_write_P(adjust_layer, false);
-    } else if(layer_state_is(4)) {
+    } else if (layer_state_is(4)) {
         oled_write_P(raise_layer, false);
-    } else if(layer_state_is(3)) {
+    } else if (layer_state_is(3)) {
+        oled_write_P(raise_layer, false);
+    } else if (layer_state_is(2)) {
         oled_write_P(lower_layer, false);
     } else {
         oled_write_P(default_layer, false);
@@ -381,7 +381,7 @@ static void render_mod_status_gui_alt(uint8_t modifiers) {
     static const char PROGMEM on_on_1[] = {0xcb, 0};
     static const char PROGMEM on_on_2[] = {0xcc, 0};
 
-    if(modifiers & MOD_MASK_GUI) {
+    if (modifiers & MOD_MASK_GUI) {
         oled_write_P(gui_on_1, false);
     } else {
         oled_write_P(gui_off_1, false);
@@ -389,21 +389,21 @@ static void render_mod_status_gui_alt(uint8_t modifiers) {
 
     if ((modifiers & MOD_MASK_GUI) && (modifiers & MOD_MASK_ALT)) {
         oled_write_P(on_on_1, false);
-    } else if(modifiers & MOD_MASK_GUI) {
+    } else if (modifiers & MOD_MASK_GUI) {
         oled_write_P(on_off_1, false);
-    } else if(modifiers & MOD_MASK_ALT) {
+    } else if (modifiers & MOD_MASK_ALT) {
         oled_write_P(off_on_1, false);
     } else {
         oled_write_P(off_off_1, false);
     }
 
-    if(modifiers & MOD_MASK_ALT) {
+    if (modifiers & MOD_MASK_ALT) {
         oled_write_P(alt_on_1, false);
     } else {
         oled_write_P(alt_off_1, false);
     }
 
-    if(modifiers & MOD_MASK_GUI) {
+    if (modifiers & MOD_MASK_GUI) {
         oled_write_P(gui_on_2, false);
     } else {
         oled_write_P(gui_off_2, false);
@@ -411,15 +411,15 @@ static void render_mod_status_gui_alt(uint8_t modifiers) {
 
     if (modifiers & MOD_MASK_GUI & MOD_MASK_ALT) {
         oled_write_P(on_on_2, false);
-    } else if(modifiers & MOD_MASK_GUI) {
+    } else if (modifiers & MOD_MASK_GUI) {
         oled_write_P(on_off_2, false);
-    } else if(modifiers & MOD_MASK_ALT) {
+    } else if (modifiers & MOD_MASK_ALT) {
         oled_write_P(off_on_2, false);
     } else {
         oled_write_P(off_off_2, false);
     }
 
-    if(modifiers & MOD_MASK_ALT) {
+    if (modifiers & MOD_MASK_ALT) {
         oled_write_P(alt_on_2, false);
     } else {
         oled_write_P(alt_off_2, false);
@@ -447,7 +447,7 @@ static void render_mod_status_ctrl_shift(uint8_t modifiers) {
     static const char PROGMEM on_on_1[] = {0xcb, 0};
     static const char PROGMEM on_on_2[] = {0xcc, 0};
 
-    if(modifiers & MOD_MASK_CTRL) {
+    if (modifiers & MOD_MASK_CTRL) {
         oled_write_P(ctrl_on_1, false);
     } else {
         oled_write_P(ctrl_off_1, false);
@@ -455,21 +455,21 @@ static void render_mod_status_ctrl_shift(uint8_t modifiers) {
 
     if ((modifiers & MOD_MASK_CTRL) && (modifiers & MOD_MASK_SHIFT)) {
         oled_write_P(on_on_1, false);
-    } else if(modifiers & MOD_MASK_CTRL) {
+    } else if (modifiers & MOD_MASK_CTRL) {
         oled_write_P(on_off_1, false);
-    } else if(modifiers & MOD_MASK_SHIFT) {
+    } else if (modifiers & MOD_MASK_SHIFT) {
         oled_write_P(off_on_1, false);
     } else {
         oled_write_P(off_off_1, false);
     }
 
-    if(modifiers & MOD_MASK_SHIFT) {
+    if (modifiers & MOD_MASK_SHIFT) {
         oled_write_P(shift_on_1, false);
     } else {
         oled_write_P(shift_off_1, false);
     }
 
-    if(modifiers & MOD_MASK_CTRL) {
+    if (modifiers & MOD_MASK_CTRL) {
         oled_write_P(ctrl_on_2, false);
     } else {
         oled_write_P(ctrl_off_2, false);
@@ -631,15 +631,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
       // Send code based on which key was pressed and whether Shift was held.
       uint8_t shift = mods & (MOD_BIT(KC_LSFT) | MOD_BIT(KC_RSFT));
-      if (layer_state_is(3)) {
-        if(shift) {
-          send_string("\"");
-        } else {
-          send_string("'");
-        }
-      } else {
-        send_string(swedish_codes[1][(bool)shift]);
-      };
+      send_string(swedish_codes[1][(bool)shift]);
+
       set_mods(mods);
       return false;        // Return false to ignore further processing of key
     }
