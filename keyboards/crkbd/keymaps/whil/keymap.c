@@ -55,9 +55,22 @@ enum custom_keycodes {
 // ,WIN_OE
 };
 
+// Each layer gets a name for readability, which is then used in the keymap matrix below.
+// The underscores don't mean anything - you can have a layer called STUFF or any other name.
+// Layer names don't all need to be of the same length, obviously, and you can also skip them
+// entirely and just use numbers.
+enum layers {
+  _BASEMAC
+ ,_BASEWIN
+ ,_LOWER
+ ,_RAISE
+ ,_RAISEMAC
+ ,_ADJUST
+};
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // Base Mac
-  [0] = LAYOUT_split_3x6_3(
+  [_BASEMAC] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       KC_BSLS,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                         KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN,  KC_GRV,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -70,7 +83,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   // Base Win
-  [1] = LAYOUT_split_3x6_3(
+  [_BASEWIN] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       KC_BSLS,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                         KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN, GUI_GRV,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -82,7 +95,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                       //`--------------------------'  `--------------------------'
   ),
   // Lower
-  [2] = LAYOUT_split_3x6_3(
+  [_LOWER] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       KC_LPRN, KC_EXLM,   KC_AT, KC_HASH, KC_DLR,  KC_PERC,                      KC_CIRC, KC_AMPR, KC_ASTR, KC_RPRN, KC_SCLN,  KC_GRV,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -95,7 +108,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   // Raise
-  [3] = LAYOUT_split_3x6_3(
+  [_RAISE] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_HOME,                      KC_PGUP, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -107,7 +120,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   // Raise Mac
-  [4] = LAYOUT_split_3x6_3(
+  [_RAISEMAC] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_HOME,                      KC_PGUP, XXXXXXX, XXXXXXX, XXXXXXX,  MAC_OE,  MAC_AA,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -119,7 +132,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   // Adjust
-  [5] = LAYOUT_split_3x6_3(
+  [_ADJUST] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       BSE_WIN,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                        KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10, BSE_MAC,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -294,20 +307,13 @@ static void print_logo_narrow(void) {
   /* Print current base layer */
   oled_set_cursor(0, 8);
   switch (get_highest_layer(default_layer_state)) {
-  case 0:
+  case _BASEMAC:
     oled_write(" mac ", false);
-    oled_write("     ", false);
     break;
-  case 1:
+  case _BASEWIN:
     oled_write(" win ", false);
-    oled_write("     ", false);
-    break;
-  case 2:
-    oled_write(" mac ", false);
-    oled_write(" swe ", false);
     break;
   default:
-    oled_write("     ", false);
     oled_write("     ", false);
   }
 
@@ -347,13 +353,13 @@ static void render_layer_state(void) {
         0x20, 0x9d, 0x9e, 0x9f, 0x20,
         0x20, 0xbd, 0xbe, 0xbf, 0x20,
         0x20, 0xdd, 0xde, 0xdf, 0x20, 0};
-    if (layer_state_is(5)) {
+    if (layer_state_is(_ADJUST)) {
         oled_write_P(adjust_layer, false);
-    } else if (layer_state_is(4)) {
+    } else if (layer_state_is(_RAISEMAC)) {
         oled_write_P(raise_layer, false);
-    } else if (layer_state_is(3)) {
+    } else if (layer_state_is(_RAISE)) {
         oled_write_P(raise_layer, false);
-    } else if (layer_state_is(2)) {
+    } else if (layer_state_is(_LOWER)) {
         oled_write_P(lower_layer, false);
     } else {
         oled_write_P(default_layer, false);
@@ -526,27 +532,28 @@ bool oled_task_user(void) {
 #endif
 
 layer_state_t layer_state_set_user(layer_state_t state) {
-  state = update_tri_layer_state(state, 3, 4, 5);
+
+  layer_state_t local_state = state;
+  state = update_tri_layer_state(state, _LOWER, _RAISEMAC, _ADJUST);
+  if (local_state == state) {
+    state = update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
+  }
 
   switch (get_highest_layer(state)) {
-  case 0:
+  case _BASEMAC:
+  case _BASEWIN:
     rgb_matrix_reload_from_eeprom();
     break;
-  case 1:
-    rgb_matrix_reload_from_eeprom();
-    break;
-  case 2:
-    rgb_matrix_reload_from_eeprom();
-    break;
-  case 3:
+  case _LOWER:
     rgb_matrix_mode_noeeprom(RGB_MATRIX_ALPHAS_MODS);
     rgb_matrix_sethsv_noeeprom(HSV_TEAL);
     break;
-  case 4:
+  case _RAISE:
+  case _RAISEMAC:
     rgb_matrix_mode_noeeprom(RGB_MATRIX_ALPHAS_MODS);
     rgb_matrix_sethsv_noeeprom(HSV_PURPLE);
     break;
-  case 5:
+  case _ADJUST:
     rgb_matrix_mode_noeeprom(RGB_MATRIX_ALPHAS_MODS);
     rgb_matrix_sethsv_noeeprom(HSV_YELLOW);
     break;
