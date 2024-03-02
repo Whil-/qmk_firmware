@@ -9,41 +9,6 @@ extern keymap_config_t keymap_config;
 extern rgblight_config_t rgblight_config;
 #endif
 
-// Define keys to keep them short in the config below
-// For 0 (base) layer
-#define CTL_ESC  LCTL_T(KC_ESC)
-#define CTL_SPC  RCTL_T(KC_SPC)
-#define CTL_TAB  LCTL_T(KC_TAB)
-#define CTL_ENT  LCTL_T(KC_ENT)
-
-#define ALT_QUOT LALT_T(KC_QUOT)
-#define ALT_ENT  LALT_T(KC_ENT)
-#define ALT_MINS LALT_T(KC_MINS)
-#define RALT_EQL  RALT_T(KC_EQL)
-#define ALT_TAB  LALT_T(KC_TAB)
-#define ALT_ESC  LALT_T(KC_ESC)
-
-#define GUI_QUOT RGUI_T(KC_QUOT)
-#define GUI_ENT  LGUI_T(KC_ENT)
-#define GUI_TAB  LGUI_T(KC_TAB)
-#define GUI_ESC  LGUI_T(KC_ESC)
-#define GUI_MAE RGUI_T(MAC_AE)
-
-#define BSE_MAC  DF(0)
-#define BSE_WIN  DF(1)
-
-#define LOW_TAB  LT(2, KC_TAB)
-#define LOW_BSPC LT(2, KC_BSPC)
-
-#define RSE_BSPC LT(3, KC_BSPC)
-#define RSE_SPC  LT(3, KC_SPC)
-#define RSE_SPCM LT(4, KC_SPC)
-
-#define ADJUST   MO(5)
-
-// Win
-#define GUI_GRV  RGUI_T(KC_GRV)
-
 enum custom_keycodes {
   MAC_AA = SAFE_RANGE
  ,MAC_AE
@@ -66,6 +31,31 @@ enum layers {
  ,_ADJUST
 };
 
+// Define keys to keep them short in the config below
+#define CTL_TAB  LCTL_T(KC_TAB)
+#define CTL_QUOT RCTL_T(KC_QUOT)
+
+#define RALT_ENT RALT_T(KC_ENT)
+#define LALT_ESC LALT_T(KC_ESC)
+
+#define GUI_QUOT RGUI_T(KC_QUOT)
+#define GUI_MAE  RGUI_T(MAC_AE)
+
+#define SFT_MINS LSFT_T(KC_MINS)
+#define SFT_EQL  RSFT_T(KC_EQL)
+
+#define BSE_MAC  DF(_BASEMAC)
+#define BSE_WIN  DF(_BASEWIN)
+
+#define LOW_TAB  LT(_LOWER, KC_TAB)
+#define LOW_BSPC LT(_LOWER, KC_BSPC)
+
+#define RSE_BSPC LT(_RAISE, KC_BSPC)
+#define RSE_SPC  LT(_RAISE, KC_SPC)
+#define RSE_SPCM LT(_RAISEMAC, KC_SPC)
+
+#define ADJUST   MO(_ADJUST)
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // Base Mac
   [_BASEMAC] = LAYOUT_split_3x6_3(
@@ -74,22 +64,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       CTL_TAB,    KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                         KC_M,    KC_N,    KC_E,    KC_I,    KC_O,GUI_QUOT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     ALT_MINS,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,                         KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH,RALT_EQL,
+     SFT_MINS,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,                         KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH, SFT_EQL,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          GUI_ESC,LOW_BSPC, KC_LSFT,    KC_RSFT,RSE_SPCM, CTL_ENT
+                                         LALT_ESC,LOW_BSPC, KC_LGUI,    KC_LCTL,RSE_SPCM,RALT_ENT
                                       //`--------------------------'  `--------------------------'
   ),
 
-  // Base Win
+  // Base Win & Linux
   [_BASEWIN] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      KC_BSLS,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                         KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN, GUI_GRV,
+      KC_BSLS,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                         KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN,  KC_GRV,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      CTL_TAB,    KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                         KC_M,    KC_N,    KC_E,    KC_I,    KC_O,ALT_QUOT,
+      CTL_TAB,    KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                         KC_M,    KC_N,    KC_E,    KC_I,    KC_O,CTL_QUOT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     ALT_MINS,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,                         KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH,RALT_EQL,
+     SFT_MINS,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,                         KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH, SFT_EQL,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          ALT_ESC,LOW_BSPC, KC_LSFT,    KC_RSFT, RSE_SPC, CTL_ENT
+                                         LALT_ESC,LOW_BSPC, KC_LGUI,    KC_LCTL, RSE_SPC,RALT_ENT
                                       //`--------------------------'  `--------------------------'
   ),
   // Lower
@@ -590,13 +580,8 @@ char *swedish_codes[][2] = {
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     /* KEYBOARD PET STATUS START */
-  case CTL_ESC:
   case CTL_TAB:
-  case CTL_ENT:
-  case GUI_ENT:
   case GUI_QUOT:
-  case GUI_TAB:
-  case GUI_GRV:
     isSneaking = record->event.pressed;
     break;
   case KC_SPC:
