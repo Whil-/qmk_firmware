@@ -13,8 +13,8 @@ For a detailed description of Markstos see [markstos Corne layout](https://mark.
   year.
 
 # Design principles
-- Easy to use on both Mac and Win
-- Easy access to modifier keys to make it easy to use in Emacs
+- Easy to use on both Mac, Linux and Windows
+- Easy access to modifier keys, in particular for Emacs
 - Symmetry as much as possible for modifiers
 - Thumb cluster for most important keys and modifiers
 - No home row mod to reduce number of "impossible to reach key combinations"
