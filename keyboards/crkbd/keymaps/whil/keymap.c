@@ -19,8 +19,9 @@ extern rgblight_config_t rgblight_config;
 #define ALT_QUOT LALT_T(KC_QUOT)
 #define ALT_ENT  LALT_T(KC_ENT)
 #define ALT_MINS LALT_T(KC_MINS)
-#define ALT_EQL  RALT_T(KC_EQL)
+#define RALT_EQL  RALT_T(KC_EQL)
 #define ALT_TAB  LALT_T(KC_TAB)
+#define ALT_ESC  LALT_T(KC_ESC)
 
 #define GUI_QUOT RGUI_T(KC_QUOT)
 #define GUI_ENT  LGUI_T(KC_ENT)
@@ -39,9 +40,6 @@ extern rgblight_config_t rgblight_config;
 #define RSE_SPCM LT(4, KC_SPC)
 
 #define ADJUST   MO(5)
-
-#define OSM_RALT OSM(MOD_RALT)
-#define OSM_SFT  OSM(MOD_RSFT)
 
 // Win
 #define GUI_GRV  RGUI_T(KC_GRV)
@@ -76,9 +74,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       CTL_TAB,    KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                         KC_M,    KC_N,    KC_E,    KC_I,    KC_O,GUI_QUOT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     ALT_MINS,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,                         KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH, ALT_EQL,
+     ALT_MINS,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,                         KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH,RALT_EQL,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          GUI_ESC,LOW_BSPC, OSM_SFT,    OSM_SFT,RSE_SPCM, CTL_ENT
+                                          GUI_ESC,LOW_BSPC, KC_LSFT,    KC_RSFT,RSE_SPCM, CTL_ENT
                                       //`--------------------------'  `--------------------------'
   ),
 
@@ -89,9 +87,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       CTL_TAB,    KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                         KC_M,    KC_N,    KC_E,    KC_I,    KC_O,ALT_QUOT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     ALT_MINS,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,                         KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH, ALT_EQL,
+     ALT_MINS,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,                         KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH,RALT_EQL,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          ALT_TAB,LOW_BSPC, OSM_SFT,    OSM_SFT, RSE_SPC, CTL_ENT
+                                          ALT_ESC,LOW_BSPC, KC_LSFT,    KC_RSFT, RSE_SPC, CTL_ENT
                                       //`--------------------------'  `--------------------------'
   ),
   // Lower
