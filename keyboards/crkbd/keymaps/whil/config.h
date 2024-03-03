@@ -26,8 +26,8 @@ This is the C configuration file for the keymap
 // Ref: https://beta.docs.qmk.fm/using-qmk/software-features/tap_hold#permissive-hold
 #define PERMISSIVE_HOLD
 
-#define ONESHOT_TAP_TOGGLE 3  /* Tapping this number of times holds the key until tapped once again. */
-#define ONESHOT_TIMEOUT 2000  /* Time (in ms) before the one shot key is released */
+#define UNICODE_SELECTED_MODES UNICODE_MODE_MACOS, UNICODE_MODE_WINDOWS, UNICODE_MODE_LINUX
+#define UNICODE_TYPE_DELAY 0
 
 #ifdef OLED_ENABLE
     #define SPLIT_LAYER_STATE_ENABLE
@@ -76,7 +76,7 @@ This is the C configuration file for the keymap
 // RGB Matrix Animation modes. Explicitly enabled
 // For full list of effects, see:
 // https://docs.qmk.fm/#/feature_rgb_matrix?id=rgb-matrix-effects
-#    define ENABLE_RGB_MATRIX_ALPHAS_MODS
+//#    define ENABLE_RGB_MATRIX_ALPHAS_MODS
 //#    define ENABLE_RGB_MATRIX_GRADIENT_UP_DOWN
 //#    define ENABLE_RGB_MATRIX_GRADIENT_LEFT_RIGHT
 //#    define ENABLE_RGB_MATRIX_BREATHING
@@ -88,7 +88,7 @@ This is the C configuration file for the keymap
 //#    define ENABLE_RGB_MATRIX_BAND_SPIRAL_VAL
 //#    define ENABLE_RGB_MATRIX_CYCLE_ALL
 //#    define ENABLE_RGB_MATRIX_CYCLE_LEFT_RIGHT
-#    define ENABLE_RGB_MATRIX_CYCLE_UP_DOWN
+//#    define ENABLE_RGB_MATRIX_CYCLE_UP_DOWN
 //#    define ENABLE_RGB_MATRIX_RAINBOW_MOVING_CHEVRON
 //#    define ENABLE_RGB_MATRIX_CYCLE_OUT_IN
 //#    define ENABLE_RGB_MATRIX_CYCLE_OUT_IN_DUAL
@@ -121,4 +121,8 @@ This is the C configuration file for the keymap
 //#    define ENABLE_RGB_MATRIX_MULTISPLASH
 //#    define ENABLE_RGB_MATRIX_SOLID_SPLASH
 //#    define ENABLE_RGB_MATRIX_SOLID_MULTISPLASH
+#endif
+
+#ifdef OS_DETECTION_ENABLE
+#    define OS_DETECTION_KEYBOARD_RESET
 #endif
