@@ -481,7 +481,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
   return state;
 }
 
-uint32_t swe_codes[][2] = {
+uint32_t swe_unicodes[][2] = {
     {
       0x00E5, // å
       0x00C5, // Å
@@ -493,6 +493,22 @@ uint32_t swe_codes[][2] = {
     {
       0x00F6, // ö
       0x00D6, // Ö
+    },
+};
+
+// Codes that work on mac without custom Unicode Hex input mode
+char *swe_mac_US_codes[][2] = {
+    {
+        SS_RALT("a"), // Option+a → å
+        SS_RALT("A"), // Option+A → Å
+    },
+    {
+        SS_RALT("u")"a", // Option+u, a → ä
+        SS_RALT("u")"A", // Option+u, A → Ä
+    },
+    {
+        SS_RALT("u")"o", // Option+u, o → ö
+        SS_RALT("u")"O", // Option+u, O → Ö
     },
 };
 
@@ -535,7 +551,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       // Send code based on which key was pressed and whether Shift was held.
       uint16_t index = keycode - SWE_AA;
       uint8_t shift = mods & (MOD_BIT(KC_LSFT) | MOD_BIT(KC_RSFT));
-      register_unicode(swe_codes[index][(bool)shift]);
+      uint8_t unicode_mode = get_unicode_input_mode();
+      if (unicode_mode == UNICODE_MODE_MACOS) {
+        send_string(swe_mac_US_codes[index][(bool)shift]);
+      } else {
+        register_unicode(swe_unicodes[index][(bool)shift]);
+      }
       set_mods(mods);
     }
     return false;
@@ -547,12 +568,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
       // Send code based on which key was pressed and whether Shift was held.
       uint8_t shift = mods & (MOD_BIT(KC_LSFT) | MOD_BIT(KC_RSFT));
-      if (!(bool)shift) {
-        register_unicode(0x00E4);
+      uint8_t unicode_mode = get_unicode_input_mode();
+      if (unicode_mode == UNICODE_MODE_MACOS) {
+        send_string(swe_mac_US_codes[1][(bool)shift]);
       } else {
-        register_unicode(0x00C4);
+        register_unicode(swe_unicodes[1][(bool)shift]);
       }
-
       set_mods(mods);
       return false;        // Return false to ignore further processing of key
     }
