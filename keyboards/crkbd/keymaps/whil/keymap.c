@@ -512,6 +512,23 @@ char *swe_mac_US_codes[][2] = {
     },
 };
 
+// Codes that work on windows without any custom changes in OS or extra software
+char *swe_win_alt_codes[][2] = {
+    {
+        SS_LALT(SS_TAP(X_KP_1)SS_TAP(X_KP_3)SS_TAP(X_KP_4)), // Alt+134 → å
+        SS_LALT(SS_TAP(X_KP_1)SS_TAP(X_KP_4)SS_TAP(X_KP_3)), // Alt+143 → Å
+
+    },
+    {
+        SS_LALT(SS_TAP(X_KP_1)SS_TAP(X_KP_3)SS_TAP(X_KP_2)), // Alt+132 → ä
+        SS_LALT(SS_TAP(X_KP_1)SS_TAP(X_KP_4)SS_TAP(X_KP_2)), // Alt+142 → Ä
+    },
+    {
+        SS_LALT(SS_TAP(X_KP_1)SS_TAP(X_KP_4)SS_TAP(X_KP_8)), // Alt+148 → ö
+        SS_LALT(SS_TAP(X_KP_1)SS_TAP(X_KP_5)SS_TAP(X_KP_3)), // Alt+153 → Ö
+    },
+};
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     /* KEYBOARD PET STATUS START */
@@ -554,6 +571,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       uint8_t unicode_mode = get_unicode_input_mode();
       if (unicode_mode == UNICODE_MODE_MACOS) {
         send_string(swe_mac_US_codes[index][(bool)shift]);
+      } else if (unicode_mode == UNICODE_MODE_WINDOWS) {
+        send_string(swe_win_alt_codes[index][(bool)shift]);
       } else {
         register_unicode(swe_unicodes[index][(bool)shift]);
       }
@@ -571,6 +590,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       uint8_t unicode_mode = get_unicode_input_mode();
       if (unicode_mode == UNICODE_MODE_MACOS) {
         send_string(swe_mac_US_codes[1][(bool)shift]);
+      } else if (unicode_mode == UNICODE_MODE_WINDOWS) {
+        send_string(swe_win_alt_codes[1][(bool)shift]);
       } else {
         register_unicode(swe_unicodes[1][(bool)shift]);
       }
