@@ -22,14 +22,19 @@ enum layers {
 // Define keys to keep them short in the config below
 #define CTL_TAB  LCTL_T(KC_TAB)
 #define CTL_QUOT RCTL_T(KC_QUOT)
+#define CTL_AE   RCTL_T(SWE_AE)
 
 #define LALT_ENT LALT_T(KC_ENT)
+#define LALT_END LALT_T(KC_END)
 #define LALT_ESC LALT_T(KC_ESC)
-#define ALT_GRV  RALT_T(KC_GRV)
-#define ALT_BSLS RALT_T(KC_BSLS)
+#define LALT_HOM LALT_T(KC_HOME)
+#define RALT_GRV RALT_T(KC_GRV)
+#define RALT_BSL RALT_T(KC_BSLS)
 
+#define GUI_ESC  LGUI_T(KC_ESC)
 #define GUI_QUOT RGUI_T(KC_QUOT)
 #define GUI_AE   RGUI_T(SWE_AE)
+#define GUI_ENT  RGUI_T(KC_ENT)
 
 #define LOW_TAB  LT(_LOWER, KC_TAB)
 #define LOW_BSPC LT(_LOWER, KC_BSPC)
@@ -43,13 +48,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // Base
   [_BASE] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      ALT_GRV,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                         KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN,ALT_BSLS,
+     RALT_GRV,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                         KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN,RALT_BSL,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      CTL_TAB,    KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                         KC_M,    KC_N,    KC_E,    KC_I,    KC_O,GUI_QUOT,
+      CTL_TAB,    KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                         KC_M,    KC_N,    KC_E,    KC_I,    KC_O,CTL_QUOT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LGUI,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,                         KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH, KC_LCTL,
+      GUI_ESC,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,                         KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH, GUI_ENT,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                         LALT_ESC,LOW_BSPC, SC_LSPO,    SC_RSPC, RSE_SPC,LALT_ENT
+                                         LALT_HOM,LOW_BSPC, SC_LSPO,    SC_RSPC, RSE_SPC,LALT_END
                                       //`--------------------------'  `--------------------------'
   ),
 
@@ -60,7 +65,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                         KC_6,    KC_7,    KC_8,    KC_9,    KC_0, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______,  KC_ESC, KC_BSPC,  KC_DEL, KC_LBRC, KC_LCBR,                      KC_RCBR, KC_RBRC, KC_COMM,  KC_DOT, KC_SLSH, _______,
+      KC_LGUI,  KC_ESC, KC_BSPC,  KC_DEL, KC_LBRC, KC_LCBR,                      KC_RCBR, KC_RBRC, KC_COMM,  KC_DOT, KC_SLSH, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           _______, _______, _______,    _______, _______, _______
                                       //`--------------------------'  `--------------------------'
@@ -71,7 +76,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  SWE_OE,  SWE_AA,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT,  GUI_AE,
+      _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT,  CTL_AE,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______, KC_MPLY, KC_MPRV, KC_MNXT, KC_VOLD, KC_VOLU,                      XXXXXXX, KC_HOME, KC_PGUP, KC_PGDN,  KC_END, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
@@ -534,6 +539,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     /* KEYBOARD PET STATUS START */
   case CTL_TAB:
   case GUI_QUOT:
+  case CTL_QUOT:
 #ifdef OLED_ENABLE
     isSneaking = record->event.pressed;
 #endif
@@ -581,6 +587,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     return false;
     break;
   case GUI_AE:
+  case CTL_AE:
     if (record->tap.count && record->event.pressed) {
       uint8_t mods = get_mods();
       clear_mods();
